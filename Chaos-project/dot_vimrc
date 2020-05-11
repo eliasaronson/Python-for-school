@@ -1,0 +1,252 @@
+" Don't try to be vi compatible
+set nocompatible
+
+" Helps force plugins to load correctly when it is turned back on below
+filetype off
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+" The following are examples of different formats supported.
+" Keep Plugin commands between vundle#begin/end.
+" plugin on GitHub repo
+Plugin 'tpope/vim-fugitive'
+" plugin from http://vim-scripts.org/vim/scripts.html
+" Plugin 'L9'
+" Git plugin not hosted on GitHub
+Plugin 'git://git.wincent.com/command-t.git'
+" git repos on your local machine (i.e. when working on your own plugin)
+"Plugin 'file:///home/gmarik/path/to/plugin'
+" The sparkup vim script is in a subdirectory of this repo called vim.
+" Pass the path to set the runtimepath properly.
+Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+" Install L9 and avoid a Naming conflict if you've already installed a
+" different version somewhere else.
+" Plugin 'ascenator/L9', {'name': 'newL9'}
+
+Plugin 'sjl/badwolf'
+
+Plugin 'ctrlpvim/ctrlp.vim'
+
+Plugin 'itchyny/lightline.vim'
+
+Plugin 'tomtom/tcomment_vim'
+
+Plugin 'reedes/vim-colors-pencil'
+
+Plugin 'nathanaelkane/vim-indent-guides'
+
+Plugin 'Valloric/YouCompleteMe'
+
+Plugin 'LucHermitte/lh-vim-lib'
+
+Plugin 'LucHermitte/lh-style'
+
+Plugin 'LucHermitte/lh-tags'
+
+Plugin 'LucHermitte/lh-dev'
+
+Plugin 'LucHermitte/lh-brackets'
+
+Plugin 'LucHermitte/searchInRuntime'
+
+Plugin 'LucHermitte/mu-template'
+
+Plugin 'tomtom/stakeholders_vim'
+
+Plugin 'LucHermitte/alternate-lite'
+
+Plugin 'LucHermitte/lh-cpp'
+
+Plugin 'octol/vim-cpp-enhanced-highlight'
+
+Plugin 'vim-scripts/indentpython.vim'
+
+Plugin 'jupyter-vim/jupyter-vim'
+
+"Plugin 'scrooloose/syntastic'
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+" 
+" Turn on syntax highlighting
+let python_highlight_all=1
+syntax on
+
+colorscheme badwolf
+
+if $COLORTERM == 'gnome-terminal'
+    set t_Co=256
+endif
+
+" For plugins to load correctly
+filetype plugin indent on
+
+" TODO: Pick a leader key
+" let mapleader = ","
+
+" Security
+set modelines=0
+
+" Show line numbers
+set number
+
+" Show file stats
+set ruler
+
+" Blink cursor on error instead of beeping (grr)
+set visualbell
+
+" Encoding
+set encoding=utf-8
+
+" Whitespace
+set wrap
+set textwidth=79
+set formatoptions=tcqrn1
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
+set expandtab
+set noshiftround
+
+" Cursor motion
+set scrolloff=3
+set backspace=indent,eol,start
+set matchpairs+=<:> " use % to jump between pairs
+runtime! macros/matchit.vim
+
+" Move up/down editor lines
+nnoremap j gj
+nnoremap k gk
+
+" Allow hidden buffers
+set hidden
+
+" Rendering
+set ttyfast
+
+" Status bar
+set laststatus=2
+
+" Last line
+set showmode
+set showcmd
+
+" Searching
+nnoremap / /\v
+vnoremap / /\v
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
+set showmatch
+map <leader><space> :let @/=''<cr> " clear search
+
+" Remap help key.
+inoremap <F1> <ESC>:set invfullscreen<CR>a
+nnoremap <F1> :set invfullscreen<CR>
+vnoremap <F1> :set invfullscreen<CR>
+
+" Textmate holdouts
+
+" Formatting
+map <leader>q gqip
+
+" Visualize tabs and newlines
+set listchars=tab:▸\ ,eol:¬
+" Uncomment this to enable by default:
+" set list " To enable by default
+" Or use your leader key + l to toggle on/off
+map <leader>l :set list!<CR> " Toggle tabs and EOL
+
+" Color scheme (terminal)
+set t_Co=256
+set background=dark
+let g:solarized_termcolors=256
+let g:solarized_termtrans=1
+" put https://raw.github.com/altercation/vim-colors-solarized/master/colors/solarized.vim
+" in ~/.vim/colors/ and uncomment:
+" colorscheme solarized
+
+"No templates when new file is created"
+let g:mt_IDontWantTemplatesAutomaticallyInserted = 1
+
+"Hopfully closes YouCompleteMe window after completion
+let g:ycm_autoclose_preview_window_after_insertion = 1
+
+"Hopfully no config question on start up"
+let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+
+" fix meta-keys which generate <Esc>a .. <Esc>z
+let c='a'
+while c <= 'z'
+  exec "set <M-".toupper(c).">=\e".c
+  exec "imap \e".c." <M-".toupper(c).">"
+  let c = nr2char(1+char2nr(c))
+endw
+set <M-1>=^[1
+" If fuzzy finder installed using git
+set rtp+=~/.fzf
+
+"Set relative numbers
+set number relativenumber
+
+"Custom key-maps"
+map <F2> :YcmCompleter FixIt<CR>
+
+map <F3> :%!astyle<CR>
+
+map <F4> :FZF ~<CR>
+
+map <F5> :FZF <CR>
+
+map <M-1> :b 1 <CR>
+
+map <F12> :JupyterConnect<CR>
+
+map <F11> :JupyterCd %:p:h<CR>
+
+map <F6> :JupyterRunFile<CR>
+
+map <F7> :JupyterSendCell<CR>
+
+map <F8> :PythonSetBreak<CR>
+
+"Timeout
+set timeoutlen=1000
+set ttimeoutlen=5
+
+au BufNewFile,BufRead *.py set encoding=utf-8
+au BufNewFile,BufRead *.py set tabstop=4
+
+"Syntastic settings
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
+
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 0
+
+"let g:syntastic_python_filetype_checkers = ['<checker-name>']
+"let g:syntastic_python_checkers = ['pylint']
